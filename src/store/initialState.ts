@@ -4,7 +4,20 @@ import { IGame, EGameState } from "../App.Types";
 
 export const initialState: IGame = {
     //requests: {}
-    deckList: new Array(),
+    deckList: [
+        {
+            key: 'harvestSlugs',
+            value: 2
+        },
+        {
+            key: 'collectScrap',
+            value: 2
+        },
+        {
+            key: 'praiseTheMessenger',
+            value: 1
+        }
+    ],
     deck: new Array(),
     discardPile: new Array(),
     structures: new Array(),
@@ -15,5 +28,6 @@ export const initialState: IGame = {
     boardTokens: new Array(),
     cardPlayList: new Array(),
     cardCatalogueList: new Array(),
-    cardCatalogue: new Array()
+    cardCatalogue: new Array(),
+    eventList: new Array()
 }

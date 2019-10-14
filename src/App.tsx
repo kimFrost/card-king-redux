@@ -2,6 +2,9 @@ import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group';
 import { useSelector, useDispatch } from 'react-redux';
 import { IGame, EGameState } from './App.Types';
+import Token from './Components/Token';
+import Card from './Components/Card';
+import { animateDrawCard, animateCardOut, addEndListener, animateDrawToken } from './animations/animations';
 //import logo from './logo.svg';
 
 const App: React.FC = () => {
@@ -16,7 +19,12 @@ const App: React.FC = () => {
                 <div className="game__actions">
                     <button onClick={() => {
                         dispatch({
-                            type: 'draw'
+                            type: 'START_GAME'
+                        })
+                    }}>Start game</button>
+                    <button onClick={() => {
+                        dispatch({
+                            type: 'DRAW'
                         })
                     }}>Draw</button>
                     <button onClick={() => {

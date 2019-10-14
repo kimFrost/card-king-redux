@@ -64,4 +64,5 @@ export interface IGame extends IState {
     cardPlayList: Array<ICard>;
     cardCatalogueList: Array<IValueSet>;
     cardCatalogue: Array<ICard>;
+    eventList: Array<any>;
 }

@@ -1,0 +1,39 @@
+
+
+animate card to card then animate card to hand
+
+
+on animation done callback
+
+
+useAnimationQueue
+- get state from hook or?
+
+useQueuedState(ID:string)
+
+
+
+
+action:drawStartHand
+	action:draw
+	action:draw
+	action:draw
+
+
+- hand
+  - card
+  - card
+  - card
+  - card
+  
+  
+  - DrawCard
+    - If queue execution is in effect, then add to queue
+	- component animation done dispatch ANIMATION_DONE, which triggers next action in queue
+	  - this could allow for easy action injection, if card have effect that need to trigger before anything else.
+	  
+	  
+	  
+https://redux-loop.js.org/docs/recipes/ActionQueue.html
+https://redux.js.org/advanced/middleware
+https://medium.com/@jtbennett/asynchronous-actions-in-redux-8412cf92a26f

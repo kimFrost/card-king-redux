@@ -7,12 +7,12 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 
 import { reducer } from './store/reducer'
-import { logger, middleware } from './store/middleware';
+import { logger } from './store/middleware.logger';
 import { initialState } from './store/initialState';
 
 
 
-const middlewares = applyMiddleware(logger, middleware)
+const middlewares = applyMiddleware(logger)
 const store = createStore(reducer, initialState, middlewares);
 
 ReactDOM.render(
