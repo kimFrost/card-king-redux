@@ -21,6 +21,9 @@ const App: React.FC = () => {
                         dispatch({
                             type: 'START_GAME'
                         })
+                        dispatch({
+                            type: 'ANIMATION_DONE'
+                        })
                     }}>Start game</button>
                     <button onClick={() => {
                         dispatch({
@@ -190,7 +193,11 @@ const App: React.FC = () => {
                                     <Transition
                                         key={card.uniqueID}
                                         onEnter={(node) => {
-                                            animateDrawCard(node, card.uniqueID || '');
+                                            animateDrawCard(node, card.uniqueID || '').then(() => {
+                                                dispatch({
+                                                    type: 'ANIMATION_DONE'
+                                                })
+                                            });
                                         }}
                                         onExit={animateCardOut}
                                         addEndListener={addEndListener}

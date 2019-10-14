@@ -45,12 +45,9 @@ export const animateCardOut = (target: HTMLElement) => {
     })
 }
 
-export const animateDraw = (target: HTMLElement, offset: [number, number]) => {
-    // Set card offset and animate to zero
-    //translateX: offset[0],
-    //translateY: offset[1],
-
-    let timeline = anime.timeline();
+export const animateDraw = (target: HTMLElement, offset: [number, number]): Promise<void> => {
+    //return new Promise((resolve, reject) => {
+    const timeline = anime.timeline();
     timeline.add({
         targets: target,
         duration: 0,
@@ -64,6 +61,15 @@ export const animateDraw = (target: HTMLElement, offset: [number, number]) => {
         translateY: 0,
         easing: 'easeInOutSine'
     });
+    //timeline.complete = () => {
+    //   resolve()
+    //}
+    //});
+    return timeline.finished;
+
+    // Set card offset and animate to zero
+    //translateX: offset[0],
+    //translateY: offset[1],
 
 
     /*
@@ -77,28 +83,33 @@ export const animateDraw = (target: HTMLElement, offset: [number, number]) => {
     */
 }
 
-export const animateDrawCard = (target: HTMLElement, uniqueID: string) => {
-    let el = document.querySelector('.game__deck');
-    // Search for card in previous render locations
-    let elements = document.querySelectorAll(`[data-id="${uniqueID}"]`)
-    for (let i = 0; i < elements.length; i++) {
-        let element = elements[i];
-        if (element && element !== target) {
-            el = element;
-            break;
+export const animateDrawCard = (target: HTMLElement, uniqueID: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        let el = document.querySelector('.game__deck');
+        // Search for card in previous render locations
+        let elements = document.querySelectorAll(`[data-id="${uniqueID}"]`)
+        for (let i = 0; i < elements.length; i++) {
+            let element = elements[i];
+            if (element && element !== target) {
+                el = element;
+                break;
+            }
         }
-    }
-    /*
-    let cardEl = document.getElementById(uniqueID);
-    if (cardEl && cardEl !== target) {
-        el = cardEl;
-    }
-    */
-    if (el) {
-        const deckRect = el.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        animateDraw(target, [deckRect.left - targetRect.left, deckRect.top - targetRect.top]);
-    }
+        /*
+        let cardEl = document.getElementById(uniqueID);
+        if (cardEl && cardEl !== target) {
+            el = cardEl;
+        }
+        */
+        if (el) {
+            const deckRect = el.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            animateDraw(target, [deckRect.left - targetRect.left, deckRect.top - targetRect.top]).then(resolve);
+        }
+        else {
+            reject();
+        }
+    });
 }
 
 export const animateDrawToken = (target: HTMLElement, uniqueID: string) => {

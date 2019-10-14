@@ -9,10 +9,11 @@ import { createStore, applyMiddleware } from 'redux'
 import { reducer } from './store/reducer'
 import { logger } from './store/middleware.logger';
 import { initialState } from './store/initialState';
+import { queueActions } from './store/middleware.queue';
 
 
 
-const middlewares = applyMiddleware(logger)
+const middlewares = applyMiddleware(logger, queueActions);
 const store = createStore(reducer, initialState, middlewares);
 
 ReactDOM.render(

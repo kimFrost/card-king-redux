@@ -37,3 +37,20 @@ action:drawStartHand
 https://redux-loop.js.org/docs/recipes/ActionQueue.html
 https://redux.js.org/advanced/middleware
 https://medium.com/@jtbennett/asynchronous-actions-in-redux-8412cf92a26f
+
+https://www.keycdn.com/blog/functional-programming
+
+
+
+transtionGroup
+- transition
+  - onEnter
+    - animateCardDraw
+  - onExit
+    - animateCardOut
+
+
+
+
+
+

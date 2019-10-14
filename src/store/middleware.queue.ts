@@ -1,25 +1,31 @@
-import { Dispatch, Action, Middleware, MiddlewareAPI } from 'redux'
+import { Dispatch, Action, Middleware, MiddlewareAPI, AnyAction } from 'redux'
 
-export const middleware: Middleware = ({ dispatch, getState }: MiddlewareAPI) => (next: Dispatch) => (action: any) => {
-    const queuedActions = [];
-    next(action);
-    switch (action.type) {
-        case 'FETCH_PAGE_DATA': {
-            /*
-            fetchPageData().then((response) => {
-                next({
-                    type: 'FETCH_PAGE_DATA_SUCCESS',
-                    payload: response
-                });
-            }).catch(() => {
-                next({
-                    type: 'FETCH_PAGE_DATA_FAILURE'
-                })
-            })
-            */
-            break;
+export const queueActions: Middleware = ({ dispatch, getState }: MiddlewareAPI) => (next: Dispatch) => {
+    const queuedActions: AnyAction[] = [];
+    let blocked = false;
+    return (action: AnyAction) => {
+        switch (action.type) {
+            case 'ANIMATION_DONE': {
+                if (queuedActions.length) {
+                    const queuedAction = queuedActions.shift();
+                    if (queuedAction) {
+                        next(queuedAction);
+                    }
+                }
+                else {
+                    blocked = false;
+                }
+                break;
+            }
+            default:
+                if (blocked) {
+                    queuedActions.push(action);
+                }
+                else {
+                    blocked = true;
+                    next(action);
+                }
+                break;
         }
-        default:
-            break;
     }
 }
