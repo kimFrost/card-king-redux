@@ -5,6 +5,7 @@ import { IGame, EGameState } from './App.Types';
 import Token from './Components/Token';
 import Card from './Components/Card';
 import { animateDrawCard, animateCardOut, addEndListener, animateDrawToken } from './animations/animations';
+import { drawCard } from './store/actions';
 //import logo from './logo.svg';
 
 const App: React.FC = () => {
@@ -26,18 +27,17 @@ const App: React.FC = () => {
                         })
                     }}>Start game</button>
                     <button onClick={() => {
+                        dispatch(drawCard());
+                        /*
                         dispatch({
                             type: 'DRAW',
-                            blocking: true
-                            /*
                             // How should component resolve this promise??
                             promise: new Promise<void>(() => {}).then(() => {
                                 dispatch({
                                     type: 'DRAW_DONE'
                                 })
                             })
-                            */
-                        })
+                        })*/
                     }}>Draw</button>
                     <button onClick={() => {
                         dispatch({

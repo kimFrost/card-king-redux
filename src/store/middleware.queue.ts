@@ -5,6 +5,10 @@ export const queueActions: Middleware = ({ dispatch, getState }: MiddlewareAPI) 
     let blocked = false;
     return (action: AnyAction) => {
         switch (action.type) {
+            case 'DRAW': {
+                // store action, return promise?
+                break;
+            }
             case 'ANIMATION_DONE': {
                 if (queuedActions.length) {
                     const queuedAction = queuedActions.shift();
