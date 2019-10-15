@@ -27,7 +27,16 @@ const App: React.FC = () => {
                     }}>Start game</button>
                     <button onClick={() => {
                         dispatch({
-                            type: 'DRAW'
+                            type: 'DRAW',
+                            blocking: true
+                            /*
+                            // How should component resolve this promise??
+                            promise: new Promise<void>(() => {}).then(() => {
+                                dispatch({
+                                    type: 'DRAW_DONE'
+                                })
+                            })
+                            */
                         })
                     }}>Draw</button>
                     <button onClick={() => {

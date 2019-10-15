@@ -1,5 +1,6 @@
 import { IResult, ICard, IEffect, IToken } from "../App.Types";
 import data from "../data/data";
+import registry from './../Services/Registry';
 
 export const shuffle = function (array: Array<any>) {
     var currentIndex = array.length;
@@ -66,10 +67,10 @@ export const effectGenNewTokens = (newTokens: Array<IToken>, effect: IEffect) =>
 }
 
 export const genCardByID = (key: string): ICard | null => {
-    let entry = data.findEntryByID(key);
+    let entry = data.findEntryByID(key); // Not pure!!
     if (entry) {
         let card = <unknown>Object.assign({}, entry) as ICard;
-        //card.uniqueID = registry.register(card);
+        card.uniqueID = registry.register(card); // Side effect!!
         return card;
     }
     return null;

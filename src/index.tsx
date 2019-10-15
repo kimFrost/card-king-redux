@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 
 import { reducer } from './store/reducer'
 import { logger } from './store/middleware.logger';
-import { initialState } from './store/initialState';
+import { initialState } from './store/initial.state';
 import { queueActions } from './store/middleware.queue';
 
 
