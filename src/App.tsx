@@ -22,9 +22,6 @@ const App: React.FC = () => {
                         dispatch({
                             type: 'START_GAME'
                         })
-                        dispatch({
-                            type: 'ANIMATION_DONE'
-                        })
                     }}>Start game</button>
                     <button onClick={() => {
                         dispatch(drawCard());
@@ -201,10 +198,15 @@ const App: React.FC = () => {
                                 state.hand.map(card => (
                                     <Transition
                                         key={card.uniqueID}
+                                        appear={true}
                                         onEnter={(node) => {
+                                            // Flip card on deck
+                                            // Parse effect
+                                            // Add to hand
+
                                             animateDrawCard(node, card.uniqueID || '').then(() => {
                                                 dispatch({
-                                                    type: 'ANIMATION_DONE'
+                                                    type: 'DRAW_DONE'
                                                 })
                                             });
                                         }}

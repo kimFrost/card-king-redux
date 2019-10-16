@@ -12,7 +12,6 @@ import { initialState } from './store/initial.state';
 import { queueActions } from './store/middleware.queue';
 
 
-
 const middlewares = applyMiddleware(logger, queueActions);
 const store = createStore(reducer, initialState, middlewares);
 

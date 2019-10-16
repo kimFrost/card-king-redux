@@ -1,12 +1,39 @@
 import { Dispatch, Action, Middleware, MiddlewareAPI, AnyAction } from 'redux'
+import { drawCard } from './actions';
 
 export const queueActions: Middleware = ({ dispatch, getState }: MiddlewareAPI) => (next: Dispatch) => {
     const queuedActions: AnyAction[] = [];
-    let blocked = false;
+    let blocking = false;
     return (action: AnyAction) => {
         switch (action.type) {
+            case 'START_GAME': {
+                next(action);
+                dispatch(drawCard());
+                dispatch(drawCard());
+                dispatch(drawCard());
+                break;
+            }
             case 'DRAW': {
-                // store action, return promise?
+                dispatch({
+                    type: 'QUEUE_ACTION',
+                    payload: action
+                })
+                break;
+            }
+            case 'DRAW_DONE': {
+                dispatch({
+                    type: 'ANIMATION_DONE'
+                })
+                break;
+            }
+            case 'QUEUE_ACTION': {
+                if (blocking) {
+                    queuedActions.push(action.payload);
+                }
+                else {
+                    blocking = true;
+                    next(action.payload);
+                }
                 break;
             }
             case 'ANIMATION_DONE': {
@@ -17,16 +44,15 @@ export const queueActions: Middleware = ({ dispatch, getState }: MiddlewareAPI) 
                     }
                 }
                 else {
-                    blocked = false;
+                    blocking = false;
                 }
                 break;
             }
             default:
-                if (blocked) {
+                if (blocking) {
                     queuedActions.push(action);
                 }
                 else {
-                    blocked = true;
                     next(action);
                 }
                 break;
