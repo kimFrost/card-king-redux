@@ -8,9 +8,19 @@ export const queueActions: Middleware = ({ dispatch, getState }: MiddlewareAPI) 
         switch (action.type) {
             case 'START_GAME': {
                 next(action);
+                dispatch({
+                    type: 'DRAW_HAND'
+                });
+                break;
+            }
+            case 'DRAW_HAND': {
                 dispatch(drawCard());
                 dispatch(drawCard());
                 dispatch(drawCard());
+                break;
+            }
+            case 'DRAW_HAND_DONE': {
+
                 break;
             }
             case 'DRAW': {

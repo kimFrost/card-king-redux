@@ -61,10 +61,6 @@ export const animateDraw = (target: HTMLElement, offset: [number, number]): Prom
         translateY: 0,
         easing: 'easeInOutSine'
     });
-    //timeline.complete = () => {
-    //   resolve()
-    //}
-    //});
     return timeline.finished;
 
     // Set card offset and animate to zero
@@ -112,6 +108,60 @@ export const animateDrawCard = (target: HTMLElement, uniqueID: string): Promise<
     });
 }
 
-export const animateDrawToken = (target: HTMLElement, uniqueID: string) => {
-    animateCardIn(target);
+
+export const offsetElementToTarget = (element: Element, target: Element): void => {
+    const elementRect = element.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    anime({
+        targets: element,
+        translateX: elementRect.left - targetRect.left,
+        translateY: elementRect.top - targetRect.top
+    })
 }
+
+export const reveal = (element: Element): Promise<void> => {
+    const timeline = anime.timeline();
+    timeline.add({
+        targets: element,
+        duration: 0,
+        rotateY: 180
+    });
+    timeline.add({
+        targets: element,
+        duration: 500,
+        easing: 'easeInOutSine',
+        rotateY: 0
+    });
+    return timeline.finished;
+}
+
+export const moveTo = (toTarget: HTMLElement, fromTarget: HTMLElement): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        const fromRect = fromTarget.getBoundingClientRect();
+        const targetRect = toTarget.getBoundingClientRect();
+    });
+}
+
+export const moveHome = (element: Element): Promise<void> => {
+    return anime({
+        targets: element,
+        translateX: 0,
+        translateY: 0,
+        duration: 500
+    }).finished
+}
+
+/*
+export const drawCard = (): Promise<void> => {
+    // Element is the card in hand. We need to offset and hide it. Then reveal, parse and move to orignal space in hand
+
+    let el = document.querySelector('.game__deck');
+    
+}
+*/
+ 
+export const animateDrawToken = (target: HTMLElement, uniqueID: string) => animateCardIn(target);
+
+// animate reveal card => Parse effects => animate to hand => Trigger done flow
+
+// animations should not have anything to do with actions. They move things and report back when they are done. Thats it!

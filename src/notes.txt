@@ -56,3 +56,11 @@ transtionGroup
 
 - non blocking actions / blocking actions
   - flow / channels
+
+
+
+  START_GAME => BEGIN_GAME => NEW_ROUND => PLAY => END_ROUND
+                              DRAW_HAND
+                              DRAW => DRAW => DRAW
+                              PARSE   PARSE   PARSE
+                              EFFECT => EFFECT
