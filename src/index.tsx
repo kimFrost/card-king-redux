@@ -10,10 +10,13 @@ import { reducer } from './store/reducer'
 import { logger } from './store/middleware.logger';
 import { initialState } from './store/initial.state';
 import { queueActions } from './store/middleware.queue';
+import createSagaMiddleware from '@redux-saga/core';
+import rootSaga from './store/sagas';
 
-
-const middlewares = applyMiddleware(logger, queueActions);
+const sagaMiddleware = createSagaMiddleware()
+const middlewares = applyMiddleware(logger, /*queueActions,*/ sagaMiddleware);
 const store = createStore(reducer, initialState, middlewares);
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>

@@ -212,7 +212,7 @@ const App: React.FC = () => {
                                                     // Move to hand slot
                                                     moveHome(node).then(() => {
                                                         dispatch({
-                                                            type: 'DRAW_DONE'
+                                                            type: 'ADD_CARD_TO_HAND_DONE'
                                                         })
                                                     })
                                                 })

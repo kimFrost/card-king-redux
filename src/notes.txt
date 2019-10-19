@@ -64,3 +64,48 @@ transtionGroup
                               DRAW => DRAW => DRAW
                               PARSE   PARSE   PARSE
                               EFFECT => EFFECT
+
+
+
+
+
+
+SAGA:
+middleware::QUEUE_ACTION(DRAW)
+- no queue in actionChannel
+- call actionHandler which puts action(DRAW) 
+- actionHandler take(DRAW_DONE)
+- actionHandler put(QUEUE_ACTION_DONE) or maybe nothing?
+middleware::QUEUE_ACTION(DRAW)
+- Set in queue in actionChannel
+middleware::QUEUE_ACTION(DRAW)
+- Set in queue in actionChannel
+
+
+
+- DRAW_CARD
+  - PRESENT_TOP_CARD
+    - PARSE_EFFECT
+      - ADD_TO_HAND
+
+
+
+
+- DRAW_CARD
+  - QUEUE::REVEAL_TOP_CARD
+    - handleAction - wait for REVEAL_TOP_CARD_DONE
+  - QUEUE::PARSE_CARD_EFFECTS
+    - handleAction - wait for PARSE_CARD_EFFECTS_DONE
+  - QUEUE::ADD_CARD_TO_HAND
+    - handleAction - wait for ADD_CARD_TO_HAND_DONE
+
+
+
+
+ no base actions are queued. Only derived actions from sagas are.
+
+
+
+ recursive (generic watch functions)
+ - PARSE_CARD_EFFECTS
+   - QUEUE the right actions, which in themselves queue actions instantly

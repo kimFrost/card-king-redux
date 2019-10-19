@@ -53,6 +53,14 @@ export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, ac
                 ...state
             }
         }
+        case 'ADD_CARD_TO_HAND' : {
+            const card = state.deck.shift();
+            return {
+                ...state,
+                hand: state.hand.concat([card as any])
+            }
+            break;
+        }
         case 'DRAW': {
             const card = state.deck.shift();
             if (card) {
