@@ -87,6 +87,7 @@ function* watchStartRound() {
 }
 
 function* watchActionQueue() {
+    //const buffer = buffers.expanding();
     const actionsChannel = yield actionChannel('QUEUE_ACTION')
     while (true) {
         const { payload } = yield take(actionsChannel) // on action in QUEUE_ACTION channel
@@ -95,7 +96,6 @@ function* watchActionQueue() {
 }
 
 function* handleAction(payload: any) {
-    const buf = buffers.expanding()
     // Middleware.queue will map actions to QUEUE_ACTION and add orig action as payload
     // Add action to queue
     //ex.1
@@ -105,7 +105,7 @@ function* handleAction(payload: any) {
     //yield put({ type: types.SUBSCRIBER_RECEIVED, data: subscriberDetails });
     yield put({ type: payload.type });
     yield take(`${payload.type}_DONE`)
-    yield put({ type: 'QUEUE_ACTION_DONE' });
+    //yield put({ type: 'QUEUE_ACTION_DONE' });
 }
 
 /*

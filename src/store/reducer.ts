@@ -8,8 +8,10 @@ interface IRequestState {
     data: any
 }
 
-export interface IState {
-    requests: { [key: string]: IRequestState; };
+export interface IStore {
+    //requests: { [key: string]: IRequestState; };
+    queuedState: { [key: string]: IGame },
+    currentState: IGame
 }
 
 interface IAction extends Action {
@@ -31,6 +33,10 @@ const defaultState: IGame = {
     cardCatalogue: new Array(),
     eventList: new Array()
 };
+
+//const storeReducer calls state reducer. store has queue and current state
+//const stateReducer has IGame state
+
 
 export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, action: IAction): IGame => {
     switch (action.type) {

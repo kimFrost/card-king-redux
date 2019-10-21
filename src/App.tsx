@@ -205,16 +205,18 @@ const App: React.FC = () => {
                                             // Add to hand
                                             let deck = document.querySelector('.game__deck');
                                             if (deck) {
-                                                offsetElementToTarget(node, deck);
+                                                //offsetElementToTarget(node, deck);
                                                 reveal(node).then(() => {
                                                     // Parse effect
+                                                    dispatch({ type: 'REVEAL_TOP_CARD_DONE' })
 
+                                                    //dispatch({ type: 'ADD_CARD_TO_HAND_DONE' })
                                                     // Move to hand slot
+                                                    /*
                                                     moveHome(node).then(() => {
-                                                        dispatch({
-                                                            type: 'ADD_CARD_TO_HAND_DONE'
-                                                        })
+                                                       
                                                     })
+                                                    */
                                                 })
                                             }
                                             /*
