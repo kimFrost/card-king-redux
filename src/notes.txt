@@ -109,3 +109,43 @@ middleware::QUEUE_ACTION(DRAW)
  recursive (generic watch functions)
  - PARSE_CARD_EFFECTS
    - QUEUE the right actions, which in themselves queue actions instantly
+
+
+
+
+
+
+
+
+
+
+store
+- currentState
+- queuedState<action, state>{}
+
+
+
+ACTION::START_GAME
+- ACTION::START_ROUND
+  - ACTION::DRAW_CARD
+  - ACTION::DRAW_CARD
+  - ACTION::DRAW_CARD
+  
+  
+  
+saga 
+on(START_GAME)
+- prepare deck
+- dispatch START_ROUND
+
+on(START_ROUND)
+- dispatch(DRAW_CARD)
+- dispatch(DRAW_CARD)
+- dispatch(DRAW_CARD)
+
+
+All instant state change.
+but results should be cached with the action that triggered them. Then when callback for that action happen, that state should 
+
+Do I need the final state if I want cards to have a playable state, so the player knows which actions can be queue after all animations are done?
+
