@@ -66,9 +66,15 @@ function* onStartRound() {
     //yield addToQue('REVEAL_TOP_CARD', 'PARSE_CARD_EFFECTS', 'ADD_CARD_TO_HAND');
     //yield addToQue('REVEAL_TOP_CARD', 'PARSE_CARD_EFFECTS', 'ADD_CARD_TO_HAND');
     //yield addToQue('REVEAL_TOP_CARD', 'PARSE_CARD_EFFECTS', 'ADD_CARD_TO_HAND');
+    /*
     yield addToQue('ADD_CARD_TO_HAND');
     yield addToQue('ADD_CARD_TO_HAND');
     yield addToQue('ADD_CARD_TO_HAND');
+    */
+
+    yield put({ type: 'DRAW' })
+    yield put({ type: 'DRAW' })
+    yield put({ type: 'DRAW' })
 
     // Draw
     // - REVEAL
@@ -129,7 +135,7 @@ function* workerSaga(action) {
 export default function* rootSaga() {
     yield all([
         watchStartRound(),
-        watchDrawCard(),
+        //watchDrawCard(),
         //watchEffects(),
         watchActionQueue()
     ])

@@ -1,22 +1,25 @@
-import { Reducer, Action } from 'redux';
+import { Reducer, Action, combineReducers } from 'redux';
 import { IGame, EGameState, ICard } from '../App.Types';
 import { shuffle, structureToEffects, genCardByID } from '../Util/util';
 
 interface IRequestState {
-    ID: string,
-    status: string,
-    data: any
+    ID: string;
+    status: string;
+    data: any;
 }
 
-export interface IStore {
+export interface IRootState {
     //requests: { [key: string]: IRequestState; };
-    queuedState: { [key: string]: IGame },
-    currentState: IGame
+    //queuedStates: { [key: string]: IGame };
+    queuedStates: Array<IGame>;
+    currentState: IGame;
+    finalState: IGame;
 }
 
 interface IAction extends Action {
     payload?: any;
 }
+
 
 const defaultState: IGame = {
     deckList: new Array(),
@@ -32,11 +35,42 @@ const defaultState: IGame = {
     cardCatalogueList: new Array(),
     cardCatalogue: new Array(),
     eventList: new Array()
-};
+}
+
+const defaultRootState: IRootState = {
+    //queuedStates: {},
+    queuedStates: [],
+    currentState: {...defaultState},
+    finalState: {...defaultState}
+}
 
 //const storeReducer calls state reducer. store has queue and current state
 //const stateReducer has IGame state
 
+const combinedReducer = combineReducers({
+    //a: sliceReducerA,
+    //b: sliceReducerB
+  })
+  
+
+export const rootReducer: Reducer<IRootState, IAction> = (state:IRootState = defaultRootState, action:IAction): IRootState => {
+    //const intermediateState = combinedReducer(state, action)
+    if (action.type === 'PROGRESS_STATE') {
+        // use action.type in payload as ways of getting state. I think that it might not be reliable.
+        const firstState = state.queuedStates[0];
+        return {
+            queuedStates: state.queuedStates.slice(0, 1),
+            currentState: firstState,
+            finalState: state.finalState
+        }
+    }
+
+    //const finalState = reducer(state.currentState, action)
+    return {
+        ...state,
+        currentState: reducer(state.currentState, action)
+    }
+}
 
 export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, action: IAction): IGame => {
     switch (action.type) {

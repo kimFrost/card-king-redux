@@ -203,6 +203,7 @@ const App: React.FC = () => {
                                             // Flip card on deck
                                             // Parse effect
                                             // Add to hand
+                                            /*
                                             let deck = document.querySelector('.game__deck');
                                             if (deck) {
                                                 //offsetElementToTarget(node, deck);
@@ -212,20 +213,19 @@ const App: React.FC = () => {
 
                                                     //dispatch({ type: 'ADD_CARD_TO_HAND_DONE' })
                                                     // Move to hand slot
-                                                    /*
                                                     moveHome(node).then(() => {
                                                        
                                                     })
-                                                    */
                                                 })
                                             }
-                                            /*
-                                           animateDrawCard(node, card.uniqueID || '').then(() => {
-                                               dispatch({
-                                                   type: 'DRAW_DONE'
-                                               })
-                                           });
-                                           */
+                                            */
+
+                                            animateDrawCard(node, card.uniqueID || '').then(() => {
+                                                dispatch({
+                                                    type: 'DRAW_DONE'
+                                                })
+                                            });
+
                                         }}
                                         onExit={animateCardOut}
                                         addEndListener={addEndListener}

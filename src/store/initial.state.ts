@@ -1,4 +1,3 @@
-import { IState } from "./reducer";
 import { IGame, EGameState } from "../App.Types";
 
 
