@@ -72,9 +72,9 @@ function* onStartRound() {
     yield addToQue('ADD_CARD_TO_HAND');
     */
 
-    yield put({ type: 'DRAW' })
-    yield put({ type: 'DRAW' })
-    yield put({ type: 'DRAW' })
+    yield put({ type: 'DRAW', flow: true })
+    yield put({ type: 'DRAW', flow: true })
+    yield put({ type: 'DRAW', flow: true })
 
     // Draw
     // - REVEAL

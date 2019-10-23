@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 
-import { reducer } from './store/reducer'
+import { reducer, rootReducer } from './store/reducer'
 import { logger } from './store/middleware.logger';
 import { initialState } from './store/initial.state';
 import { queueActions } from './store/middleware.queue';
@@ -15,7 +15,7 @@ import rootSaga from './store/sagas';
 
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = applyMiddleware(logger, /*queueActions,*/ sagaMiddleware);
-const store = createStore(reducer, initialState, middlewares);
+const store = createStore(rootReducer, initialState, middlewares);
 sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(

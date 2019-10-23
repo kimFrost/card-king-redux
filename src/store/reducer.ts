@@ -18,6 +18,7 @@ export interface IRootState {
 
 interface IAction extends Action {
     payload?: any;
+    flow?: boolean;
 }
 
 
@@ -40,8 +41,8 @@ const defaultState: IGame = {
 const defaultRootState: IRootState = {
     //queuedStates: {},
     queuedStates: [],
-    currentState: {...defaultState},
-    finalState: {...defaultState}
+    currentState: { ...defaultState },
+    finalState: { ...defaultState }
 }
 
 //const storeReducer calls state reducer. store has queue and current state
@@ -50,25 +51,36 @@ const defaultRootState: IRootState = {
 const combinedReducer = combineReducers({
     //a: sliceReducerA,
     //b: sliceReducerB
-  })
-  
+})
 
-export const rootReducer: Reducer<IRootState, IAction> = (state:IRootState = defaultRootState, action:IAction): IRootState => {
+
+export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = defaultRootState, action: IAction): IRootState => {
     //const intermediateState = combinedReducer(state, action)
     if (action.type === 'PROGRESS_STATE') {
         // use action.type in payload as ways of getting state. I think that it might not be reliable.
         const firstState = state.queuedStates[0];
         return {
-            queuedStates: state.queuedStates.slice(0, 1),
+            queuedStates: state.queuedStates.filter((value, index) => index > 0),
             currentState: firstState,
             finalState: state.finalState
         }
     }
 
-    //const finalState = reducer(state.currentState, action)
-    return {
-        ...state,
-        currentState: reducer(state.currentState, action)
+    const newState = reducer(state.currentState, action);
+
+    if (action.flow) {
+        return {
+            queuedStates: [...state.queuedStates, newState],
+            currentState: state.currentState,
+            finalState: newState
+        }
+    }
+    else {
+        return {
+            queuedStates: state.queuedStates,
+            currentState: newState,
+            finalState: newState
+        }
     }
 }
 
@@ -93,7 +105,7 @@ export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, ac
                 ...state
             }
         }
-        case 'ADD_CARD_TO_HAND' : {
+        case 'ADD_CARD_TO_HAND': {
             const card = state.deck.shift();
             return {
                 ...state,

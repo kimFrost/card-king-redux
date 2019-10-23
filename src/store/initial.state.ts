@@ -1,7 +1,9 @@
 import { IGame, EGameState } from "../App.Types";
+import { IRootState } from "./reducer";
 
 
-export const initialState: IGame = {
+
+const initialGameState: IGame = {
     //requests: {}
     deckList: [
         {
@@ -29,4 +31,11 @@ export const initialState: IGame = {
     cardCatalogueList: new Array(),
     cardCatalogue: new Array(),
     eventList: new Array()
+}
+
+export const initialState: IRootState = {
+    //queuedStates: {},
+    queuedStates: [],
+    currentState: {...initialGameState},
+    finalState: {...initialGameState}
 }

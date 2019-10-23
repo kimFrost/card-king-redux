@@ -7,10 +7,12 @@ import Card from './Components/Card';
 import { animateDrawCard, animateCardOut, addEndListener, animateDrawToken, offsetElementToTarget, reveal, moveHome } from './animations/animations';
 import { drawCard } from './store/actions';
 //import logo from './logo.svg';
+import { IRootState } from './store/reducer';
 
 const App: React.FC = () => {
 
-    const state = useSelector((state: IGame) => state);
+    const rootState = useSelector((state: IRootState) => state);
+    const state = rootState.currentState;
     const dispatch = useDispatch();
 
     return (
@@ -248,7 +250,7 @@ const App: React.FC = () => {
 
             </div>
 
-            <pre className="code">{JSON.stringify(state, null, 2)}</pre>
+            <pre className="code">{JSON.stringify(rootState, null, 2)}</pre>
         </div>
 
     );
