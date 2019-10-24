@@ -14,6 +14,7 @@ export interface IRootState {
     queuedStates: Array<IGame>;
     currentState: IGame;
     finalState: IGame;
+    random: number;
 }
 
 interface IAction extends Action {
@@ -42,7 +43,8 @@ const defaultRootState: IRootState = {
     //queuedStates: {},
     queuedStates: [],
     currentState: { ...defaultState },
-    finalState: { ...defaultState }
+    finalState: { ...defaultState },
+    random: -1
 }
 
 //const storeReducer calls state reducer. store has queue and current state
@@ -57,29 +59,33 @@ const combinedReducer = combineReducers({
 export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = defaultRootState, action: IAction): IRootState => {
     //const intermediateState = combinedReducer(state, action)
     if (action.type === 'PROGRESS_STATE') {
-        // use action.type in payload as ways of getting state. I think that it might not be reliable.
-        const firstState = state.queuedStates[0];
+        const nextState = state.queuedStates[1] || state.queuedStates[0];
         return {
             queuedStates: state.queuedStates.filter((value, index) => index > 0),
-            currentState: firstState,
-            finalState: state.finalState
+            currentState: nextState,
+            finalState: state.finalState,
+            random: Math.random()
         }
     }
-
-    const newState = reducer(state.currentState, action);
-
-    if (action.flow) {
+    if (action.type === 'QUEUE') {
+        const newState = reducer(state.finalState, action.payload);
+        const newQueue = [...state.queuedStates, newState];
+        const currentState = newQueue[0];
+        const finalState = newQueue[newQueue.length - 1];
         return {
-            queuedStates: [...state.queuedStates, newState],
-            currentState: state.currentState,
-            finalState: newState
+            queuedStates: newQueue,
+            currentState: currentState,
+            finalState: finalState,
+            random: Math.random()
         }
     }
     else {
+        const newState = reducer(state.currentState, action);
         return {
-            queuedStates: state.queuedStates,
+            ...state,
+            //finalState: state.queuedStates[state.queuedStates.length - 1],
             currentState: newState,
-            finalState: newState
+            random: Math.random()
         }
     }
 }
@@ -87,23 +93,25 @@ export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = de
 export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, action: IAction): IGame => {
     switch (action.type) {
         case 'START_GAME': {
-            state.deck = state.deckList.reduce<ICard[]>((array, entry) => {
-                for (let i = 0; i < entry.value; i++) {
-                    let card = genCardByID(entry.key);
-                    if (card) {
-                        array.push(card)
+            return {
+                ...state,
+                deck: shuffle(state.deckList.reduce<ICard[]>((array, entry) => {
+                    for (let i = 0; i < entry.value; i++) {
+                        let card = genCardByID(entry.key);
+                        if (card) {
+                            array.push(card)
+                        }
                     }
-                }
-                return array
-            }, [])
+                    return array
+                }, [])),
+                state: EGameState.GS_Play
+            }
+            /*
             const tokens = state.structures.reduce(structureToEffects, []);
             state.resources.length = 0;
             state.resources.push(...tokens);
-            state.deck = shuffle(state.deck);
-            state.state = EGameState.GS_Play;
-            return {
-                ...state
-            }
+            */
+            //state.deck = shuffle(state.deck);
         }
         case 'ADD_CARD_TO_HAND': {
             const card = state.deck.shift();

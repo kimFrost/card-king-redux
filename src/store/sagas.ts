@@ -42,20 +42,7 @@ function* watchDrawCard() {
 }
 
 function* onStartRound() {
-    /*
-    yield put({type: 'QUEUE_ACTION', payload: {
-        type: 'DRAW'
-    }})
-    yield put({type: 'QUEUE_ACTION', payload: {
-        type: 'DRAW'
-    }})
-    yield put({type: 'QUEUE_ACTION', payload: {
-        type: 'DRAW'
-    }})
-    yield put({type: 'QUEUE_ACTION', payload: {
-        type: 'DRAW'
-    }})
-    */
+    
     /*
      yield put({type: 'DRAW'})
      yield put({type: 'DRAW'})
@@ -72,9 +59,24 @@ function* onStartRound() {
     yield addToQue('ADD_CARD_TO_HAND');
     */
 
+    /*
     yield put({ type: 'DRAW', flow: true })
     yield put({ type: 'DRAW', flow: true })
     yield put({ type: 'DRAW', flow: true })
+    */
+
+    yield put({type: 'QUEUE', payload: {
+        type: 'DRAW'
+    }})
+    yield put({type: 'QUEUE', payload: {
+        type: 'DRAW'
+    }})
+    yield put({type: 'QUEUE', payload: {
+        type: 'DRAW'
+    }})
+    yield put({type: 'QUEUE', payload: {
+        type: 'DRAW'
+    }})
 
     // Draw
     // - REVEAL
@@ -114,6 +116,12 @@ function* handleAction(payload: any) {
     //yield put({ type: 'QUEUE_ACTION_DONE' });
 }
 
+function* watchCallBacks() {
+    yield takeEvery('DRAW_DONE', function*() {
+        yield put({type: 'PROGRESS_STATE'})
+    })
+}
+
 /*
 function* watchAction() {
     yield takeLatest('ACTION', workerSaga)
@@ -137,6 +145,7 @@ export default function* rootSaga() {
         watchStartRound(),
         //watchDrawCard(),
         //watchEffects(),
+        watchCallBacks(),
         watchActionQueue()
     ])
 }

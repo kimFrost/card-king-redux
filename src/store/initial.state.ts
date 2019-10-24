@@ -37,5 +37,6 @@ export const initialState: IRootState = {
     //queuedStates: {},
     queuedStates: [],
     currentState: {...initialGameState},
-    finalState: {...initialGameState}
+    finalState: {...initialGameState},
+    random: -1
 }

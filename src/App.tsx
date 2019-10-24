@@ -11,13 +11,13 @@ import { IRootState } from './store/reducer';
 
 const App: React.FC = () => {
 
-    const rootState = useSelector((state: IRootState) => state);
-    const state = rootState.currentState;
+    //const rootState = useSelector((state: IRootState) => state);
+    //const state = rootState.currentState;
+    const state = useSelector((state: IRootState) => state.currentState);
     const dispatch = useDispatch();
 
     return (
         <div>
-            findme
             <div className="game">
                 <div className="game__actions">
                     <button onClick={() => {
@@ -250,7 +250,7 @@ const App: React.FC = () => {
 
             </div>
 
-            <pre className="code">{JSON.stringify(rootState, null, 2)}</pre>
+            <pre className="code">{JSON.stringify(state, null, 2)}</pre>
         </div>
 
     );
