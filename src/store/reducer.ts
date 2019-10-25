@@ -58,10 +58,13 @@ const combinedReducer = combineReducers({
 
 export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = defaultRootState, action: IAction): IRootState => {
     //const intermediateState = combinedReducer(state, action)
+    if (action.type === 'DRAW_DONE') return state
+    
     if (action.type === 'PROGRESS_STATE') {
-        const nextState = state.queuedStates[1] || state.queuedStates[0];
+        const nextState = state.queuedStates[1] || state.queuedStates[0] || state.finalState;
+        const lowestIndex = (state.queuedStates.length > 1) ? 0 : -1;
         return {
-            queuedStates: state.queuedStates.filter((value, index) => index > 0),
+            queuedStates: state.queuedStates.filter((value, index) => index > lowestIndex),
             currentState: nextState,
             finalState: state.finalState,
             random: Math.random()
@@ -82,9 +85,9 @@ export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = de
     else {
         const newState = reducer(state.currentState, action);
         return {
-            ...state,
-            //finalState: state.queuedStates[state.queuedStates.length - 1],
+            queuedStates: [],
             currentState: newState,
+            finalState: newState,
             random: Math.random()
         }
     }

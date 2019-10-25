@@ -11,9 +11,8 @@ import { IRootState } from './store/reducer';
 
 const App: React.FC = () => {
 
-    //const rootState = useSelector((state: IRootState) => state);
-    //const state = rootState.currentState;
-    const state = useSelector((state: IRootState) => state.currentState);
+    const rootState = useSelector((state: IRootState) => state);
+    const state = rootState.currentState;
     const dispatch = useDispatch();
 
     return (
@@ -250,7 +249,7 @@ const App: React.FC = () => {
 
             </div>
 
-            <pre className="code">{JSON.stringify(state, null, 2)}</pre>
+            <pre className="code">{JSON.stringify(rootState.finalState, null, 2)}</pre>
         </div>
 
     );

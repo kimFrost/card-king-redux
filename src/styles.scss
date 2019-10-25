@@ -46,6 +46,7 @@ $cardHeight: $cardWidth * 1.6;
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto;
+    pointer-events: none;
     & > * {
         margin-top: 5px;
     }

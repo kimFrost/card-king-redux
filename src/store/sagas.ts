@@ -1,4 +1,4 @@
-import { put, takeEvery, all, take, actionChannel, call, select, } from 'redux-saga/effects'
+import { put, takeEvery, all, take, actionChannel, call, select, cancel, fork } from 'redux-saga/effects'
 import { buffers } from 'redux-saga'
 
 function* onDrawCard() {
@@ -117,7 +117,13 @@ function* handleAction(payload: any) {
 }
 
 function* watchCallBacks() {
-    yield takeEvery('DRAW_DONE', function*() {
+    /*
+    const task = yield fork(takeEvery as any, 'DRAW_DONE', function*() {
+        yield put({type: 'PROGRESS_STATE'})
+    })
+    yield cancel(task)
+    */
+    const task = yield takeEvery('DRAW_DONE', function*() {
         yield put({type: 'PROGRESS_STATE'})
     })
 }
