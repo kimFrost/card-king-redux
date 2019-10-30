@@ -126,6 +126,7 @@ export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, ac
         }
         case 'DRAW': {
             const card = state.deck.shift();
+
             if (card) {
                 //card.effects
             }

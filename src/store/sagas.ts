@@ -78,6 +78,17 @@ function* onStartRound() {
         type: 'DRAW'
     }})
 
+    //DRAW
+    //DRAW_BEGIN -> intercept(draw)
+    //PRESENT
+    //PRESENT_BEGIN -> intercept(present)
+    //PARSE
+    //PARSE_BEGIN -> intercept(parse)
+    //PARSE_END
+    //PRESENT_END
+    //DRAW_END
+    
+
     // Draw
     // - REVEAL
     // - PARSE EFFECTS
