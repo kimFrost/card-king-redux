@@ -119,17 +119,23 @@ const DATA_EffectCards: { [key: string]: ICard } = {
         title: 'Collect scrap',
         effects: [
             {
-                output: {
-                    key: 'scrap',
+                onDraw: {
+                    key: 'draw',
                     value: 1
                 }
-            },
-            {
-                output: {
-                    key: 'health',
-                    value: -1
-                }
-            },
+            }
+            // {
+            //     output: {
+            //         key: 'scrap',
+            //         value: 1
+            //     }
+            // },
+            // {
+            //     output: {
+            //         key: 'health',
+            //         value: -1
+            //     }
+            // },
         ]
     },
     'harvestSlugs': {

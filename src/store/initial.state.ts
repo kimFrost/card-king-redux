@@ -12,7 +12,7 @@ const initialGameState: IGame = {
         },
         {
             key: 'collectScrap',
-            value: 2
+            value: 5
         },
         {
             key: 'praiseTheMessenger',

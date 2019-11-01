@@ -1,0 +1,39 @@
+
+    //DRAW
+    //DRAW_BEGIN -> intercept(draw)             
+    //PRESENT                                   - set to currentPresentation
+    //PRESENT_BEGIN -> intercept(present)
+    //PARSE                                     - set to curretEffect
+    //PARSE_BEGIN -> intercept(parse)
+    //PARSE_END
+    //PRESENT_END                               - add to hand array
+    //DRAW_END                      
+
+    //DRAW            
+
+
+DRAW => 
+- add_to_hand - state
+- parse - state
+- effect::DRAW - state
+- add_to_hand - state
+- parse - state
+- effect- state
+
+draw => 
+-
+
+
+
+trigger action::draw
+- get action play list, state array according to those actions and the final state, from backend service or other
+
+
+
+
+- how do state look between the event changes
+
+
+
+
+- reducer actions are events, so in a way a reducer is a event listener that react to events happening in the app

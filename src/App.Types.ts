@@ -15,6 +15,7 @@ export interface IEffect {
     storage?: IValueSet;
     endOfTurn?: IEffect;
     suppress?: IValueSet;
+    onDraw?: IValueSet;
 }
 
 

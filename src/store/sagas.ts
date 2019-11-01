@@ -1,5 +1,10 @@
 import { put, takeEvery, all, take, actionChannel, call, select, cancel, fork } from 'redux-saga/effects'
 import { buffers } from 'redux-saga'
+import { drawCard } from './actions'
+
+const generateActionQueue = () => {
+
+}
 
 function* onDrawCard() {
     //const state = yield select();
@@ -11,11 +16,15 @@ function* onDrawCard() {
         type: 'PARSE_CARD_EFFECTS'
     }})
     */
+
+    /*
     yield put({
         type: 'QUEUE_ACTION', payload: {
             type: 'ADD_CARD_TO_HAND'
         }
     })
+    */
+
 
     /*
     yield put({ type: 'REVEAL_TOP_CARD' })
@@ -42,7 +51,10 @@ function* watchDrawCard() {
 }
 
 function* onStartRound() {
-    
+
+    yield put({type: 'DRAW'})
+    yield put({type: 'DRAW'})
+
     /*
      yield put({type: 'DRAW'})
      yield put({type: 'DRAW'})
@@ -59,12 +71,14 @@ function* onStartRound() {
     yield addToQue('ADD_CARD_TO_HAND');
     */
 
+
     /*
     yield put({ type: 'DRAW', flow: true })
     yield put({ type: 'DRAW', flow: true })
     yield put({ type: 'DRAW', flow: true })
     */
 
+    /*
     yield put({type: 'QUEUE', payload: {
         type: 'DRAW'
     }})
@@ -77,17 +91,8 @@ function* onStartRound() {
     yield put({type: 'QUEUE', payload: {
         type: 'DRAW'
     }})
+    */
 
-    //DRAW
-    //DRAW_BEGIN -> intercept(draw)
-    //PRESENT
-    //PRESENT_BEGIN -> intercept(present)
-    //PARSE
-    //PARSE_BEGIN -> intercept(parse)
-    //PARSE_END
-    //PRESENT_END
-    //DRAW_END
-    
 
     // Draw
     // - REVEAL
@@ -134,8 +139,8 @@ function* watchCallBacks() {
     })
     yield cancel(task)
     */
-    const task = yield takeEvery('DRAW_DONE', function*() {
-        yield put({type: 'PROGRESS_STATE'})
+    const task = yield takeEvery('DRAW_DONE', function* () {
+        yield put({ type: 'PROGRESS_STATE' })
     })
 }
 
@@ -160,7 +165,7 @@ function* workerSaga(action) {
 export default function* rootSaga() {
     yield all([
         watchStartRound(),
-        //watchDrawCard(),
+        watchDrawCard(),
         //watchEffects(),
         watchCallBacks(),
         watchActionQueue()

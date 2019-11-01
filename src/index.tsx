@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import thunk from "redux-thunk";
 
 import { reducer, rootReducer } from './store/reducer'
 import { logger } from './store/middleware.logger';
@@ -12,9 +13,10 @@ import { initialState } from './store/initial.state';
 import { queueActions } from './store/middleware.queue';
 import createSagaMiddleware from '@redux-saga/core';
 import rootSaga from './store/sagas';
+import { logic } from './store/middleware.logic.';
 
 const sagaMiddleware = createSagaMiddleware()
-const middlewares = applyMiddleware(logger, /*queueActions,*/ sagaMiddleware);
+const middlewares = applyMiddleware(logger, /*queueActions,*/ logic, sagaMiddleware);
 const store = createStore(rootReducer, initialState, middlewares);
 sagaMiddleware.run(rootSaga);
 

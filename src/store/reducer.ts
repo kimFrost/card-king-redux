@@ -126,9 +126,18 @@ export const reducer: Reducer<IGame, IAction> = (state: IGame = defaultState, ac
         }
         case 'DRAW': {
             const card = state.deck.shift();
-
             if (card) {
                 //card.effects
+                if (card.effects) {
+                    card.effects.map(effect => {
+                        if (effect.onDraw) {
+                            if (effect.onDraw.key === 'draw') {
+                                // cant queue actions here. should it be done in rootReducer? I dont think so. 
+                                // but reduder shouldn't handle queue related tasks.
+                            }
+                        }
+                    })
+                }
             }
             return {
                 ...state,

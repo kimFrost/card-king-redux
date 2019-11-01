@@ -25,6 +25,11 @@ const App: React.FC = () => {
                         })
                     }}>Start game</button>
                     <button onClick={() => {
+                        dispatch({
+                            type: 'PROGRESS_STATE'
+                        })
+                    }}>PROGRESS_STATE</button>
+                    <button onClick={() => {
                         dispatch(drawCard());
                         /*
                         dispatch({
@@ -221,11 +226,11 @@ const App: React.FC = () => {
                                             }
                                             */
 
-                                            animateDrawCard(node, card.uniqueID || '').then(() => {
-                                                dispatch({
-                                                    type: 'DRAW_DONE'
-                                                })
-                                            });
+                                            // animateDrawCard(node, card.uniqueID || '').then(() => {
+                                            //     dispatch({
+                                            //         type: 'DRAW_DONE'
+                                            //     })
+                                            // });
 
                                         }}
                                         onExit={animateCardOut}
@@ -249,7 +254,12 @@ const App: React.FC = () => {
 
             </div>
 
-            <pre className="code">{JSON.stringify(rootState.finalState, null, 2)}</pre>
+            <pre className="code">
+                {JSON.stringify(rootState.queuedStates.map((state, index) => {
+                    return state.hand.map(card => card.key)
+                }), null, 2)}
+            </pre>
+
         </div>
 
     );
