@@ -142,6 +142,23 @@ export const moveTo = (toTarget: HTMLElement, fromTarget: HTMLElement): Promise<
     });
 }
 
+export const bounce = (target: HTMLElement): Promise<void> => {
+    const timeline = anime.timeline();
+    timeline.add({
+        targets: target,
+        duration: 200,
+        easing: 'easeInOutSine',
+        translateY: -100
+    });
+    timeline.add({
+        targets: target,
+        duration: 400,
+        easing: 'easeInOutSine',
+        translateY: 0
+    });
+    return timeline.finished;
+}
+
 export const moveHome = (element: Element): Promise<void> => {
     return anime({
         targets: element,

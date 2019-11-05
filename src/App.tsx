@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IGame, EGameState } from './App.Types';
 import Token from './Components/Token';
 import Card from './Components/Card';
-import { animateDrawCard, animateCardOut, addEndListener, animateDrawToken, offsetElementToTarget, reveal, moveHome } from './animations/animations';
+import { animateDrawCard, animateCardOut, addEndListener, animateDrawToken, offsetElementToTarget, reveal, moveHome, bounce } from './animations/animations';
 import { drawCard } from './store/actions';
 //import logo from './logo.svg';
 import { IRootState } from './store/reducer';
@@ -226,11 +226,27 @@ const App: React.FC = () => {
                                             }
                                             */
 
-                                            // animateDrawCard(node, card.uniqueID || '').then(() => {
-                                            //     dispatch({
-                                            //         type: 'DRAW_DONE'
-                                            //     })
-                                            // });
+                                            animateDrawCard(node, card.uniqueID || '').then(() => {
+                                                // dispatch({
+                                                //     type: 'DRAW_DONE'
+                                                // })
+                                                //if effects, trigger animation 
+                                                if (card.effects) {
+                                                    card.effects.map(effect => {
+                                                        if (effect.onDraw) {
+                                                            bounce(node).then(() => {
+                                                                dispatch({
+                                                                    type: 'DRAW_DONE'
+                                                                })
+                                                            })
+                                                            return
+                                                        }
+                                                    })
+                                                }
+                                                dispatch({
+                                                    type: 'DRAW_DONE'
+                                                })
+                                            });
 
                                         }}
                                         onExit={animateCardOut}

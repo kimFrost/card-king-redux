@@ -32,6 +32,15 @@ export const logic: Middleware = ({ dispatch, getState }: MiddlewareAPI) => (nex
                                 dispatch({
                                     type: 'QUEUE',
                                     payload: {
+                                        type: 'EFFECT_ADDED'
+                                    }
+                                })
+
+                                // bounce up/down card to indicate effect triggered
+
+                                dispatch({
+                                    type: 'QUEUE',
+                                    payload: {
                                         type: 'DRAW', 
                                     }
                                 });
