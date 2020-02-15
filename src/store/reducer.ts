@@ -83,7 +83,8 @@ export const rootReducer: Reducer<IRootState, IAction> = (state: IRootState = de
         }
     }
     else {
-        const newState = reducer(state.currentState, action);
+        //const newState = reducer(state.currentState, action);
+        const newState = reducer(state.finalState, action);
         return {
             queuedStates: [],
             currentState: newState,
